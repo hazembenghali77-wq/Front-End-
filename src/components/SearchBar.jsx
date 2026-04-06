@@ -7,7 +7,7 @@ const SearchBar = ({ onSearch }) => {
     if (value === "") {
       onSearch(null)
     } else {
-      const response = await fetch(`http://localhost:5000/api/products?search=${value}`)
+      const response = await fetch(`https://back-end-8456.onrender.com/api/products?search=${value}`)
       const data = await response.json()
       onSearch(data.products)
     }
