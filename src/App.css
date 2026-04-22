@@ -1023,6 +1023,100 @@ a { text-decoration: none; color: inherit; }
 .price-slider-input--right { z-index: 4; }
 
 /* ============================================
+   HAMBURGER BUTTON
+   ============================================ */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: var(--gray-200);
+  transition: all var(--transition-fast);
+  transform-origin: center;
+}
+
+/* Animate to X when open */
+.hamburger-line.open:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.hamburger-line.open:nth-child(2) { opacity: 0; }
+.hamburger-line.open:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ============================================
+   MOBILE MENU
+   ============================================ */
+
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: rgba(8, 8, 8, 0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(242, 240, 235, 0.07);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  z-index: 999;
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--transition);
+}
+
+.mobile-menu--open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-menu a {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gray-400);
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(242, 240, 235, 0.05);
+  transition: all var(--transition-fast);
+}
+
+.mobile-menu a:hover {
+  color: var(--white);
+  padding-left: 2rem;
+}
+
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+}
+
+/* ============================================
+   SHOW HAMBURGER ON MOBILE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .navbar-links a { display: none; }   /* hide desktop links */
+}
+
+@media (min-width: 769px) {
+  .hamburger { display: none; }        /* hide hamburger on desktop */
+  .mobile-menu { display: none; }      /* hide mobile menu on desktop */
+}
+
+/* ============================================
    ANIMATIONS
    ============================================ */
 
