@@ -3,14 +3,9 @@ import React, { useState } from 'react'
 const SearchBar = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("")
 
-  const handleSearch = async (value) => {
-    if (value === "") {
-      onSearch(null)
-    } else {
-      const response = await fetch(`https://back-end-8456.onrender.com/api/products?search=${value}`)
-      const data = await response.json()
-      onSearch(data.products)
-    }
+  const handleSearch = (value) => {
+    setSearchQuery(value)
+    onSearch(value)           // ✅ passes the string up — Home handles the fetch
   }
 
   return (
@@ -19,13 +14,10 @@ const SearchBar = ({ onSearch }) => {
         <span className="search-icon">⌕</span>
         <input
           type="text"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value)
-            handleSearch(e.target.value)
-          }}
-          placeholder="Search the collection..."
           className="search-input"
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+          placeholder="Search within collection..."
         />
       </div>
     </div>
