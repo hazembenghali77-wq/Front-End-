@@ -20,8 +20,8 @@ const handleSubmit = async (e) => {
 
   try {
     const url = id
-      ? `http://localhost:5000/api/updateproduct/${id}`
-      : "http://localhost:5000/api/createproduct"
+      ? `https://back-end-8456.onrender.com/api/updateproduct/${id}`
+      : "https://back-end-8456.onrender.com/api/createproduct"
 
     const method = id ? "PUT" : "POST"
 
@@ -55,7 +55,7 @@ const handleSubmit = async (e) => {
 const { id } = useParams()
 useEffect(() => {
   if (id) {
-    fetch(`http://localhost:5000/api/getproduct`)
+    fetch(`https://back-end-8456.onrender.com/api/getproduct`)
       .then(res => res.json())
       .then(data => {
         const product = data.Product.find(p => p._id === id)

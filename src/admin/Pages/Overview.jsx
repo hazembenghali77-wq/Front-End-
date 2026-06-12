@@ -8,7 +8,7 @@ function Overview() {
   const [totalUsers, setTotalUsers] = useState(0)
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/stats")
+    fetch("https://back-end-8456.onrender.com/api/stats")
       .then(res => res.json())
       .then(data => {
         if (data.totalOrders !== undefined)   setTotalOrders(data.totalOrders)
@@ -17,7 +17,7 @@ function Overview() {
       })
       .catch(err => console.log(err))
 
-    fetch("http://localhost:5000/api/revenue")
+    fetch("https://back-end-8456.onrender.com/api/revenue")
       .then(res => res.json())
       .then(data => {
         if (data.totalRevenue !== undefined) setTotalRevenue(data.totalRevenue)

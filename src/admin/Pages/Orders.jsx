@@ -5,13 +5,13 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null)
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+    fetch("https://back-end-8456.onrender.com/api/orders")
       .then(res => res.json())
       .then(data => setOrders(data.orders))
   }, [])
 
   const handleDelete = async (_id) => {
-    const res = await fetch(`http://localhost:5000/api/deleteorder/${_id}`, {
+    const res = await fetch(`https://back-end-8456.onrender.com/api/deleteorder/${_id}`, {
       method: "DELETE"
     })
     if (res.ok) {

@@ -24,7 +24,7 @@ const Products = () => {
     )
     
 const handleDelete = async (_id) => {
-  const res = await fetch(`http://localhost:5000/api/deleteproduct/${_id}`, {
+  const res = await fetch(`https://back-end-8456.onrender.com/api/deleteproduct/${_id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id: _id })   

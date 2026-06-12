@@ -18,7 +18,7 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const url = "http://localhost:5000/api/createorder"
+      const url = "https://back-end-8456.onrender.com/api/createorder"
       const res = await fetch(url, {
         method: "POST",
         headers: {

@@ -7,7 +7,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/allusers")
+        const response = await fetch("https://back-end-8456.onrender.com/api/allusers")
         const data = await response.json()
         if (data.users) {
           setUsers(data.users)
@@ -25,7 +25,7 @@ const Users = () => {
   const handleDelete = async (userId, userName) => {
     if (window.confirm(`Are you sure you want to delete ${userName}?`)) {
       try {
-        const response = await fetch(`http://localhost:5000/api/deleteuser/${userId}`, {
+        const response = await fetch(`https://back-end-8456.onrender.com/api/deleteuser/${userId}`, {
           method: "DELETE"
         })
         if (response.ok) {
