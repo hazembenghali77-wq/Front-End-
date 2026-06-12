@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const SearchBar = ({ onSearch }) => {
+const SearchProduct = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("")
 
   const handleSearch = (value) => {
@@ -17,11 +17,11 @@ const SearchBar = ({ onSearch }) => {
           className="search-input"
           value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search within collection..."
+          placeholder="Search..."
         />
       </div>
     </div>
   )
 }
 
-export default SearchBar
+export default SearchProduct

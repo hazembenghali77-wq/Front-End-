@@ -16,7 +16,7 @@ const Filter = ({ category, setCategory }) => {
     <div className="filter-wrapper">
       {categories.map((item) => (
         <button
-          key={item.label}                          // ✅ was key={item.value} — "All" had key=""
+          key={item.label}                          
           onClick={() => setCategory(item.value)}
           className={`filter-btn ${category === item.value ? "active" : ""}`}
         >

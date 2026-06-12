@@ -68,7 +68,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ✅ No more home-layout flex — panier is now a fixed drawer */}
       <div className="home-products">
         <Filter category={category} setCategory={setCategory} />
         <PriceSlider min={0} max={maxPrice} value={priceRange} onChange={setPriceRange} />

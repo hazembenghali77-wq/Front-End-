@@ -1,20 +1,19 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import PanierCard from '../components/PanierCard'
+import { useNavigate } from 'react-router-dom'
 
 const Panier = ({ isOpen, onClose }) => {
+  const navigate = useNavigate()
   const { products } = useSelector(state => state.panier)
   const total = products.reduce((sum, p) => sum + p.price * p.quantity, 0)
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`panier-backdrop ${isOpen ? 'panier-backdrop--visible' : ''}`}
         onClick={onClose}
       />
-
-      {/* Drawer */}
       <div className={`panier ${isOpen ? 'panier--open' : ''}`}>
         <div className="panier-header">
           <h2 className="panier-title">Your Bag</h2>
@@ -43,7 +42,7 @@ const Panier = ({ isOpen, onClose }) => {
             </div>
             <button
               className="checkout-btn"
-              onClick={() => alert("Order placed successfully 🛍️")}
+              onClick={() => navigate('/checkout')}
             >
               Checkout
             </button>

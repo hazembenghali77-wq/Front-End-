@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { logout } from '../redux/slices/UserSlice'
 
 const Navbar = ({ onCartToggle }) => {
   const { products } = useSelector(state => state.panier)
+  const { isAuth, username } = useSelector(state => state.user)
   const totalItems = products.reduce((sum, p) => sum + p.quantity, 0)
   const [menuOpen, setMenuOpen] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   return (
     <>
@@ -23,9 +27,27 @@ const Navbar = ({ onCartToggle }) => {
 
         {/* Desktop links — hidden on mobile */}
         <div className="navbar-links">
+          {isAuth && username && (
+            <span className="navbar-welcome">Welcome, {username}</span>
+          )}
           <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
+          {!isAuth ? (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          ) : (
+            <button
+              type="button"
+              className="navbar-logout-btn"
+              onClick={() => {
+                dispatch(logout())
+                navigate('/', { replace: true })
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         <span className="navbar-brand">Sylezz</span>
@@ -39,14 +61,31 @@ const Navbar = ({ onCartToggle }) => {
         </button>
       </nav>
 
-      {/* Mobile menu overlay */}
       <div className={`mobile-menu ${menuOpen ? 'mobile-menu--open' : ''}`}>
-        <Link to="/"        onClick={() => setMenuOpen(false)}>Home</Link>
-        <Link to="/login"   onClick={() => setMenuOpen(false)}>Login</Link>
-        <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
+        {isAuth && username && (
+          <span className="mobile-menu-welcome">Welcome, {username}</span>
+        )}
+        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+        {!isAuth ? (
+          <>
+            <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
+            <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
+          </>
+        ) : (
+          <button
+            type="button"
+            className="mobile-menu-logout-btn"
+            onClick={() => {
+              dispatch(logout())
+              setMenuOpen(false)
+              navigate('/', { replace: true })
+            }}
+          >
+            Logout
+          </button>
+        )}
       </div>
 
-      {/* Backdrop to close menu */}
       {menuOpen && (
         <div className="mobile-menu-backdrop" onClick={() => setMenuOpen(false)} />
       )}

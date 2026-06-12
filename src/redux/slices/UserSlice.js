@@ -25,15 +25,21 @@ const UserSlice = createSlice({
     initialState: {
         isLoading: false,
         token: localStorage.getItem("token") || null,
-        isAuth: false,
-        error: null
+        isAuth: localStorage.getItem("isAuth") === "true",
+        error: null,
+        role: localStorage.getItem("role") || null,
+        username: localStorage.getItem("username") || null
     },
     reducers: {
         logout: (state) => {
             localStorage.removeItem("token");
             localStorage.removeItem("isAuth");
+            localStorage.removeItem("role");
+            localStorage.removeItem("username");
             state.token = null;
             state.isAuth = false;
+            state.role = null;
+            state.username = null;
         },
         clearMessage:(state) => {
             state.message = null
@@ -50,7 +56,6 @@ const UserSlice = createSlice({
             state.error = null;
             state.message = action.payload.msg;
             localStorage.setItem("token", state.token);
-            localStorage.setItem("isAuth", "true");
         },
         [RegisterUser.rejected]: (state, action) => {
             state.isLoading = false;
@@ -65,9 +70,13 @@ const UserSlice = createSlice({
             state.isLoading = false;
             state.token = action.payload.token;
             state.isAuth = true;
+            state.role = action.payload.User.role;
+            state.username = action.payload.User.username;
             state.error = null;
             localStorage.setItem("token", state.token);
             localStorage.setItem("isAuth", "true");
+            localStorage.setItem("role", state.role);
+            localStorage.setItem("username", state.username);
             state.message = action.payload.msg
         },
         [LoginUser.rejected]: (state, action) => {
