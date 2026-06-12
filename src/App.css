@@ -1606,7 +1606,7 @@ a { text-decoration: none; color: inherit; }
   z-index: 1;
 }
 
-..checkout-place-btn:active {
+.checkout-place-btn:active {
   transform: scale(0.99);
 }
 .checkout-form .form-input {
