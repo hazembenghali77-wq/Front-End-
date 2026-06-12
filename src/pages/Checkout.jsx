@@ -84,7 +84,7 @@ const Checkout = () => {
             <input className="form-input" name="address" value={formData.address} onChange={handleChange} placeholder="123 Main St" />
           </div>
 
-          <button className="btn-submit" onClick={handleSubmit}>Place Order</button>
+          <button className="checkout-place-btn" onClick={handleSubmit}>Place Order</button>
         </div>
 
       </div>
