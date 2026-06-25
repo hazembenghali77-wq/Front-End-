@@ -46,7 +46,7 @@ const Users = () => {
   return (
     <div>
       <h1 className="dashboard-title">Users</h1>
-      <table className="admin-table">
+      <table className="admin-table users-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -57,9 +57,9 @@ const Users = () => {
         <tbody>
           {users.map(user => (
             <tr key={user._id}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>
+              <td className="table-cell">{user.username}</td>
+              <td className="table-cell">{user.email}</td>
+              <td className="table-cell table-actions-cell">
                 <button className="btn-delete" onClick={() => handleDelete(user._id, user.username)}>Delete</button>
               </td>
             </tr>

@@ -42,7 +42,7 @@ const Orders = () => {
     <div>
       <h1 className="dashboard-title">Orders for {username}</h1>
       <div className="table-wrapper">
-        <table className="admin-table">
+        <table className="admin-table orders-table">
           <thead>
             <tr>
               <th>Order ID</th>
@@ -57,15 +57,17 @@ const Orders = () => {
           <tbody>
           {orders.map(order => (
             <tr key={order._id}>
-              <td>#{order._id.slice(-5)}</td>
-              <td>{order.name} {order.surname}</td>
-              <td>{order.email}</td>
-              <td>{order.phone}</td>
-              <td>{order.address}</td>
-              <td>{new Date(order.CreatedAt).toLocaleDateString()}</td>
-              <td>
-                <button className="btn-edit" onClick={() => setSelectedOrder(order)}>View</button>
-                <button className="btn-delete" onClick={() => handleDelete(order._id)}>Delete</button>
+              <td className="table-cell table-id-cell">#{order._id.slice(-5)}</td>
+              <td className="table-cell">{order.name} {order.surname}</td>
+              <td className="table-cell">{order.email}</td>
+              <td className="table-cell">{order.phone}</td>
+              <td className="table-cell">{order.address}</td>
+              <td className="table-cell table-date-cell">{new Date(order.CreatedAt).toLocaleDateString()}</td>
+              <td className="table-cell table-actions-cell">
+                <div className="table-actions">
+                  <button className="btn-edit" onClick={() => setSelectedOrder(order)}>View</button>
+                  <button className="btn-delete" onClick={() => handleDelete(order._id)}>Delete</button>
+                </div>
               </td>
             </tr>
           ))}

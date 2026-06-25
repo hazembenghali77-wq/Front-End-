@@ -41,45 +41,48 @@ const handleDelete = async (_id) => {
 return (
   <div>
     <div className="page-header">
-    <h1 className="dashboard-title" style={{ paddingLeft: "18rem" }}>Products</h1>
-    <button
-    className="btn-submit btn-add"
-    onClick={() => navigate('/admin/add-product')}>Add Product</button>
-</div>
+      <h1 className="dashboard-title">Products</h1>
+      <button
+        className="btn-submit btn-add"
+        onClick={() => navigate('/admin/add-product')}
+      >
+        Add Product
+      </button>
+    </div>
     <SearchProduct onSearch={handleSearch} />
-    <div className='overflow-x-auto'>
-    <table className="admin-table">
+    <table className="admin-table products-table">
       <thead>
         <tr>
           <th>Image</th>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Actions</th>
+          <th className="products-title-cell">Title</th>
+          <th className="products-category-cell">Category</th>
+          <th className="products-price-cell">Price</th>
+          <th className="products-actions-cell">Actions</th>
         </tr>
       </thead>
       <tbody>
         {filteredProducts.map(product => (
           <tr key={product._id}>
-            <td className="product-image-cell">
+            <td className="product-image-cell table-cell">
               <img
                 src={product.image}
                 alt={product.title}
                 className="admin-product-image"
               />
             </td>
-            <td>{product.title}</td>
-            <td>{product.category}</td>
-            <td>${product.price}</td>
-            <td>
-              <button className="btn-edit" onClick={() => navigate(`/admin/edit-product/${product._id}`)}>Edit</button>
-              <button className="btn-delete" onClick={() => handleDelete(product._id)}>Delete</button>
+            <td className="table-cell products-title-cell">{product.title}</td>
+            <td className="table-cell products-category-cell">{product.category}</td>
+            <td className="table-cell table-price-cell products-price-cell">${product.price}</td>
+            <td className="table-cell table-actions-cell products-actions-cell">
+              <div className="table-actions">
+                <button className="btn-edit" onClick={() => navigate(`/admin/edit-product/${product._id}`)}>Edit</button>
+                <button className="btn-delete" onClick={() => handleDelete(product._id)}>Delete</button>
+              </div>
             </td>
           </tr>
         ))}
       </tbody>
     </table>
-    </div>
   </div>
 
 )
