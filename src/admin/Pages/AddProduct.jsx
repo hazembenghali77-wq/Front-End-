@@ -1,112 +1,165 @@
-import { useState,useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 
 const AddProduct = () => {
-const [formData, setFormData] = useState({
-  title: "",
-  description: "",
-  price: "",
-  image: "",
-  size: "",
-  category: ""
-})
+  const { id } = useParams()
 
-const handleChange = (e) => {
-  setFormData({ ...formData, [e.target.name]: e.target.value })
-}
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    price: "",
+    image: "",
+    size: "",
+    category: ""
+  })
 
-const handleSubmit = async (e) => {
-  e.preventDefault()
-
-  try {
-    const url = id
-      ? `https://back-end-8456.onrender.com/api/updateproduct/${id}`
-      : "https://back-end-8456.onrender.com/api/createproduct"
-
-    const method = id ? "PUT" : "POST"
-
-    const res = await fetch(url, {
-      method: method,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    })
-
-    if (res.ok) {
-      alert(id ? "Product updated successfully" : "Product added successfully")
-        if (!id) {
-    setFormData({
-      title: "",
-      description: "",
-      price: "",
-      image: "",
-      size: "",
-      category: ""
-    })
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
-    } else {
-      alert("Failed")
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-const { id } = useParams()
-useEffect(() => {
-  if (id) {
-    fetch(`https://back-end-8456.onrender.com/api/getproduct`)
-      .then(res => res.json())
-      .then(data => {
-        const product = data.Product.find(p => p._id === id)
-        setFormData(product)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const url = id
+        ? `https://back-end-8456.onrender.com/api/updateproduct/${id}`
+        : "https://back-end-8456.onrender.com/api/createproduct"
+
+      const method = id ? "PUT" : "POST"
+
+      const { _id, __v, ...cleanData } = formData
+
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cleanData)
       })
+
+      if (res.ok) {
+        alert(id ? "Product updated successfully" : "Product added successfully")
+
+        if (!id) {
+          setFormData({
+            title: "",
+            description: "",
+            price: "",
+            image: "",
+            size: "",
+            category: ""
+          })
+        }
+      } else {
+        alert("Failed")
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
-}, [id])
 
-return (
+  useEffect(() => {
+    if (id) {
+      fetch(`https://back-end-8456.onrender.com/api/getproduct`)
+        .then(res => res.json())
+        .then(data => {
+          const product = data.Product?.find(p => p._id === id)
 
-  <div>
-    <h1 className="dashboard-title">Add Products</h1>
-    <div className="form-card">
+          if (product) {
+            setFormData({
+              title: product.title || "",
+              description: product.description || "",
+              price: product.price || "",
+              image: product.image || "",
+              size: product.size || "",
+              category: product.category || ""
+            })
+          }
+        })
+        .catch(err => console.log(err))
+    }
+  }, [id])
 
-      <div className="form-group">
-        <label className="form-label">Title</label>
-        <input className="form-input" name="title" value={formData.title} onChange={handleChange} placeholder="Product title" />
-      </div>
+  return (
+    <div>
+      <h1 className="dashboard-title">
+        {id ? "Edit Product" : "Add Product"}
+      </h1>
 
-      <div className="form-group">
-        <label className="form-label">Description</label>
-        <textarea className="form-textarea" name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
-      </div>
+      <form className="form-card" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label">Title</label>
+          <input
+            className="form-input"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter product title"
+          />
+        </div>
 
-      <div className="form-group">
-        <label className="form-label">Price</label>
-        <input className="form-input" name="price" value={formData.price} onChange={handleChange} placeholder="Price" type="number" />
-      </div>
+        <div className="form-group">
+          <label className="form-label">Description</label>
+          <textarea
+            className="form-textarea"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter product description"
+          />
+        </div>
 
-      <div className="form-group">
-        <label className="form-label">Image URL</label>
-        <input className="form-input" name="image" value={formData.image} onChange={handleChange} placeholder="Image URL" />
-      </div>
+        <div className="form-group">
+          <label className="form-label">Price</label>
+          <input
+            className="form-input"
+            name="price"
+            type="number"
+            value={formData.price}
+            onChange={handleChange}
+            placeholder="Enter product price"
+          />
+        </div>
 
-      <div className="form-group">
-        <label className="form-label">Category</label>
-        <input className="form-input" name="category" value={formData.category} onChange={handleChange} placeholder="Category" />
-      </div>
+        <div className="form-group">
+          <label className="form-label">Image URL</label>
+          <input
+            className="form-input"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            placeholder="Enter image URL"
+          />
+        </div>
 
-      <div className="form-group">
-        <label className="form-label">Size</label>
-        <input className="form-input" name="size" value={formData.size} onChange={handleChange} placeholder="Size" />
-      </div>
+        <div className="form-group">
+          <label className="form-label">Category</label>
+          <input
+            className="form-input"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter product category"
+          />
+        </div>
 
-<button className="btn-submit" onClick={handleSubmit}>
-  {id ? "Update Product" : "Add Product"}
-</button>
+        <div className="form-group">
+          <label className="form-label">Size</label>
+          <input
+            className="form-input"
+            name="size"
+            value={formData.size}
+            onChange={handleChange}
+            placeholder="Enter product size"
+          />
+        </div>
 
+        <button className="btn-submit" type="submit">
+          {id ? "Update Product" : "Add Product"}
+        </button>
+      </form>
     </div>
-  </div>
-)
+  )
 }
 
 export default AddProduct

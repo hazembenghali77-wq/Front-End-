@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
   const { products } = useSelector(state => state.panier)
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -32,6 +34,7 @@ const Checkout = () => {
       })
       if (res.ok) {
         alert("Order placed successfully!")
+        navigate('/')
       } else {
         alert("Failed to place order")
       }

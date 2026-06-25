@@ -1,13 +1,30 @@
 import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const Orders = () => {
   const [orders, setOrders] = useState([])
   const [selectedOrder, setSelectedOrder] = useState(null)
+  const { username } = useSelector(state => state.user)
 
   useEffect(() => {
-    fetch("https://back-end-8456.onrender.com/api/orders")
-      .then(res => res.json())
-      .then(data => setOrders(data.orders))
+    fetch("https://back-end-8456.onrender.com/api/orders", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("token")
+      }
+    })
+      .then(async res => {
+        if (!res.ok) {
+          const data = await res.json()
+          throw new Error(data.msg || "Unable to load orders")
+        }
+        return res.json()
+      })
+      .then(data => setOrders(data.orders || []))
+      .catch(err => {
+        console.error(err)
+      })
   }, [])
 
   const handleDelete = async (_id) => {
@@ -23,7 +40,7 @@ const Orders = () => {
 
   return (
     <div>
-      <h1 className="dashboard-title">Orders</h1>
+      <h1 className="dashboard-title">Orders for {username}</h1>
       <div className="table-wrapper">
         <table className="admin-table">
           <thead>

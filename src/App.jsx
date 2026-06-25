@@ -13,6 +13,7 @@ import './App.css'
 import Products from "./admin/Pages/Products"
 import WelcomeAdmin from "./admin/Pages/WelcomeAdmin"
 import ProtectedRoute from "./admin/ProtectedRoute"
+import UserOrder from "./pages/UserOrder"
 
 function App() {
   const location = useLocation()
@@ -25,6 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/userorder" element={<UserOrder />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
